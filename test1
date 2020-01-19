@@ -1,0 +1,68 @@
+local Net = _G.LuaNetworking
+
+	--Place grenade case
+	Hooks:Add("NetworkReceivedData", "SyncEnvironments", function(sender, id, data)
+
+	if id == "branchbank_sync" then
+
+		--Put the data into an array
+		local branchbank = {}
+		for i in string.gmatch(data, "[^|]+") do
+			table.insert(branchbank, i)
+		end
+
+		if Network:is_server() then
+			if BaseNetworkHandler._verify_gamestate(BaseNetworkHandler._gamestate_filter.any_ingame) then
+				if #branchbank == 1 then
+					--Retrieve the values from string
+					--Env
+					local Tempbranchbank = {}
+					for i in string.gmatch(branchbank[1], "[^(,)]+") do
+						table.insert(Tempbranchbank, tonumber(i))
+					end
+					local host_value = tonumber(branchbank[1])
+					local client_branchbank = host_value, managers.network:session():local_peer():id()
+				end
+			end
+		end
+
+	end
+	end)
+  
+  if Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 1 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "1" )
+	elseif Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 2 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "2" )
+		if rnd3 == 1 and Network:is_server() then
+			BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/mellowday.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+			BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/mellowday.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+		end
+		if rnd3 == 2 and Network:is_server() then
+			BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/xbox_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+			BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/xbox_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+		end
+		if rnd3 == 3 and Network:is_server() then
+			BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/bank_day.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+			BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/bank_day.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+		end
+		if rnd3 == 4 and Network:is_server() then
+			BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/env_trailer_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+			BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/env_trailer_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+		end
+	elseif Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 3 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "3" )
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/mellowday.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/mellowday.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	elseif Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 4 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "4" )
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/xbox_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/xbox_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	elseif Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 5 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "5" )
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/bank_day.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/bank_day.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	elseif Global.load_level == true and Global.game_settings.level_id == "branchbank" and restoration.Options:GetValue("OTHER/Env_Banks") == 6 and Network:is_server() then
+		Net:SendToPeers( "branchbank_sync", restoration.Options:SetValue("OTHER/Env_Banks") == "6" )
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-gold/scriptdata/env_trailer_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	    BeardLib:ReplaceScriptData("mods/restoration-mod-dev/scriptdata/env_trailer_bank.custom_xml", "custom_xml", "environments/pd2_env_mid_day/pd2_env_mid_day", "environment")
+	end
